@@ -1,0 +1,11 @@
+goos: darwin
+goarch: arm64
+pkg: github.com/nrxr/enumbenchmarks/enumer/executionstatus
+BenchmarkExecutionStatus_String_LastItem-8     	1000000000	         0.8569 ns/op
+BenchmarkExecutionStatus_String_MiddleItem-8   	1000000000	         0.8567 ns/op
+BenchmarkExecutionStatus_String_FirstItem-8    	1000000000	         0.8576 ns/op
+BenchmarkExecutionStatusString_LastItem-8      	268656415	         4.464 ns/op
+BenchmarkExecutionStatusString_MiddleItem-8    	358363890	         3.344 ns/op
+BenchmarkExecutionStatusString_FirstItem-8     	383202019	         3.133 ns/op
+PASS
+ok  	github.com/nrxr/enumbenchmarks/enumer/executionstatus	7.785s

@@ -14,6 +14,7 @@ generator enumer.
 * [Benchmarks](#benchmarks)
     * [Enumer vs Manual](#enumer-vs-manual)
     * [Enumer vs Idiomatic](#enumer-vs-idiomatic)
+    * [Enumer vs Combined](#enumer-vs-combined)
 
 <!-- vim-markdown-toc -->
 
@@ -26,6 +27,8 @@ I'm trying three implementations:
 - The most idiomatic way, mimicking how the HTTP library implements enums.
 - The manual way I tend to write, with an optimization for the String method
   using a separate slice of strings for faster retrievel than from map lookups.
+- The combined is the fastest from idiomatic with the fastest from manual. So
+  string slice for String() and idiomatic switch for ExecutionStatusString fn.
 
 ## Benchmarks
 
@@ -99,6 +102,25 @@ ExecutionStatusString_LastItem-8      15.760n ± ∞ ¹   4.501n ± ∞ ¹      
 ExecutionStatusString_MiddleItem-8    13.390n ± ∞ ¹   3.342n ± ∞ ¹        ~ (p=1.000 n=1) ²
 ExecutionStatusString_FirstItem-8     13.140n ± ∞ ¹   3.127n ± ∞ ¹        ~ (p=1.000 n=1) ²
 geomean                                4.741n         1.924n        -59.43%
+¹ need >= 6 samples for confidence interval at level 0.95
+² need >= 4 samples to detect a difference at alpha level 0.05
+```
+
+### Enumer vs Combined
+
+```console
+goos: darwin
+goarch: arm64
+pkg: github.com/nrxr/enumbenchmarks/enumer/executionstatus
+                                    │  enumer.txt   │              combined.txt              │
+                                    │    sec/op     │    sec/op      vs base                 │
+ExecutionStatus_String_LastItem-8     1.6010n ± ∞ ¹   0.8569n ± ∞ ¹        ~ (p=1.000 n=1) ²
+ExecutionStatus_String_MiddleItem-8   1.5990n ± ∞ ¹   0.8567n ± ∞ ¹        ~ (p=1.000 n=1) ²
+ExecutionStatus_String_FirstItem-8    1.6000n ± ∞ ¹   0.8576n ± ∞ ¹        ~ (p=1.000 n=1) ²
+ExecutionStatusString_LastItem-8      15.760n ± ∞ ¹    4.464n ± ∞ ¹        ~ (p=1.000 n=1) ²
+ExecutionStatusString_MiddleItem-8    13.390n ± ∞ ¹    3.344n ± ∞ ¹        ~ (p=1.000 n=1) ²
+ExecutionStatusString_FirstItem-8     13.140n ± ∞ ¹    3.133n ± ∞ ¹        ~ (p=1.000 n=1) ²
+geomean                                4.741n          1.757n        -62.94%
 ¹ need >= 6 samples for confidence interval at level 0.95
 ² need >= 4 samples to detect a difference at alpha level 0.05
 ```
