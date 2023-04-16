@@ -28,44 +28,56 @@ I'm trying three implementations:
 - The manual way I tend to write, with an optimization for the String method
   using a separate slice of strings for faster retrievel than from map lookups.
 - The combined is the fastest from idiomatic with the fastest from manual. So
-  string slice for String() and idiomatic switch for ExecutionStatusString fn.
+  string slice for String() and idiomatic switch for ExecutionStatusString
+  function.
 
 ## Benchmarks
 
 ```console
 goos: darwin
 goarch: arm64
-pkg: github.com/nrxr/enumbenchmarks/enumer/executionstatus
-BenchmarkExecutionStatus_String_LastItem-8     	697159990	         1.599 ns/op
-BenchmarkExecutionStatus_String_MiddleItem-8   	750704174	         1.599 ns/op
-BenchmarkExecutionStatus_String_FirstItem-8    	749813324	         1.600 ns/op
-BenchmarkExecutionStatusString_LastItem-8      	80869797	        15.02 ns/op
-BenchmarkExecutionStatusString_MiddleItem-8    	75749607	        15.95 ns/op
-BenchmarkExecutionStatusString_FirstItem-8     	100000000	        13.18 ns/op
+pkg: github.com/nrxr/enumbenchmarks/combined/executionstatus
+BenchmarkExecutionStatus_String_LastItem-8     	1000000000	         0.5797 ns/op
+BenchmarkExecutionStatus_String_MiddleItem-8   	1000000000	         0.5248 ns/op
+BenchmarkExecutionStatus_String_FirstItem-8    	1000000000	         0.5227 ns/op
+BenchmarkExecutionStatusString_LastItem-8      	440918524	         2.727 ns/op
+BenchmarkExecutionStatusString_MiddleItem-8    	587417516	         2.045 ns/op
+BenchmarkExecutionStatusString_FirstItem-8     	627972648	         1.912 ns/op
 PASS
-ok  	github.com/nrxr/enumbenchmarks/enumer/executionstatus	8.039s
+ok  	github.com/nrxr/enumbenchmarks/combined/executionstatus	6.737s
+goos: darwin
+goarch: arm64
+pkg: github.com/nrxr/enumbenchmarks/enumer/executionstatus
+BenchmarkExecutionStatus_String_LastItem-8     	1000000000	         0.9765 ns/op
+BenchmarkExecutionStatus_String_MiddleItem-8   	1000000000	         0.9774 ns/op
+BenchmarkExecutionStatus_String_FirstItem-8    	1000000000	         0.9775 ns/op
+BenchmarkExecutionStatusString_LastItem-8      	133323987	         9.020 ns/op
+BenchmarkExecutionStatusString_MiddleItem-8    	132739348	         9.036 ns/op
+BenchmarkExecutionStatusString_FirstItem-8     	149557675	         8.093 ns/op
+PASS
+ok  	github.com/nrxr/enumbenchmarks/enumer/executionstatus	10.619s
 goos: darwin
 goarch: arm64
 pkg: github.com/nrxr/enumbenchmarks/idiomatic/executionstatus
-BenchmarkExecutionStatus_String_LastItem-8     	1000000000	         1.024 ns/op
-BenchmarkExecutionStatus_String_MiddleItem-8   	1000000000	         1.025 ns/op
-BenchmarkExecutionStatus_String_FirstItem-8    	1000000000	         1.025 ns/op
-BenchmarkExecutionStatusString_LastItem-8      	266512113	         4.503 ns/op
-BenchmarkExecutionStatusString_MiddleItem-8    	358854044	         3.342 ns/op
-BenchmarkExecutionStatusString_FirstItem-8     	383289942	         3.127 ns/op
+BenchmarkExecutionStatus_String_LastItem-8     	1000000000	         0.6260 ns/op
+BenchmarkExecutionStatus_String_MiddleItem-8   	1000000000	         0.6257 ns/op
+BenchmarkExecutionStatus_String_FirstItem-8    	1000000000	         0.6251 ns/op
+BenchmarkExecutionStatusString_LastItem-8      	439873963	         2.725 ns/op
+BenchmarkExecutionStatusString_MiddleItem-8    	586818466	         2.046 ns/op
+BenchmarkExecutionStatusString_FirstItem-8     	627604122	         1.912 ns/op
 PASS
-ok  	github.com/nrxr/enumbenchmarks/idiomatic/executionstatus	8.336s
+ok  	github.com/nrxr/enumbenchmarks/idiomatic/executionstatus	6.614s
 goos: darwin
 goarch: arm64
 pkg: github.com/nrxr/enumbenchmarks/manual/executionstatus
-BenchmarkExecutionStatus_String_LastItem-8     	1000000000	         0.8559 ns/op
-BenchmarkExecutionStatus_String_MiddleItem-8   	1000000000	         0.8574 ns/op
-BenchmarkExecutionStatus_String_FirstItem-8    	1000000000	         0.9450 ns/op
-BenchmarkExecutionStatusString_LastItem-8      	93189710	        12.81 ns/op
-BenchmarkExecutionStatusString_MiddleItem-8    	93819939	        12.51 ns/op
-BenchmarkExecutionStatusString_FirstItem-8     	137130495	         8.751 ns/op
+BenchmarkExecutionStatus_String_LastItem-8     	1000000000	         0.5239 ns/op
+BenchmarkExecutionStatus_String_MiddleItem-8   	1000000000	         0.5230 ns/op
+BenchmarkExecutionStatus_String_FirstItem-8    	1000000000	         0.5232 ns/op
+BenchmarkExecutionStatusString_LastItem-8      	171471234	         6.886 ns/op
+BenchmarkExecutionStatusString_MiddleItem-8    	198201745	         6.044 ns/op
+BenchmarkExecutionStatusString_FirstItem-8     	224331176	         5.444 ns/op
 PASS
-ok  	github.com/nrxr/enumbenchmarks/manual/executionstatus	7.644s
+ok  	github.com/nrxr/enumbenchmarks/manual/executionstatus	7.485s
 ```
 
 ### Enumer vs Manual
@@ -74,17 +86,15 @@ ok  	github.com/nrxr/enumbenchmarks/manual/executionstatus	7.644s
 goos: darwin
 goarch: arm64
 pkg: github.com/nrxr/enumbenchmarks/enumer/executionstatus
-                                    │  enumer.txt   │               manual.txt               │
-                                    │    sec/op     │    sec/op      vs base                 │
-ExecutionStatus_String_LastItem-8     1.6010n ± ∞ ¹   0.8562n ± ∞ ¹        ~ (p=1.000 n=1) ²
-ExecutionStatus_String_MiddleItem-8   1.5990n ± ∞ ¹   0.8563n ± ∞ ¹        ~ (p=1.000 n=1) ²
-ExecutionStatus_String_FirstItem-8    1.6000n ± ∞ ¹   0.8566n ± ∞ ¹        ~ (p=1.000 n=1) ²
-ExecutionStatusString_LastItem-8       15.76n ± ∞ ¹    10.76n ± ∞ ¹        ~ (p=1.000 n=1) ²
-ExecutionStatusString_MiddleItem-8     13.39n ± ∞ ¹    10.25n ± ∞ ¹        ~ (p=1.000 n=1) ²
-ExecutionStatusString_FirstItem-8     13.140n ± ∞ ¹    8.748n ± ∞ ¹        ~ (p=1.000 n=1) ²
-geomean                                4.741n          2.909n        -38.64%
-¹ need >= 6 samples for confidence interval at level 0.95
-² need >= 4 samples to detect a difference at alpha level 0.05
+                                    │  enumer.txt  │              manual.txt              │
+                                    │    sec/op    │    sec/op     vs base                │
+ExecutionStatus_String_LastItem-8     0.9767n ± 0%   0.5234n ± 0%  -46.41% (p=0.000 n=20)
+ExecutionStatus_String_MiddleItem-8   0.9767n ± 2%   0.5234n ± 1%  -46.41% (p=0.000 n=20)
+ExecutionStatus_String_FirstItem-8    0.9778n ± 1%   0.5325n ± 8%  -45.54% (p=0.000 n=20)
+ExecutionStatusString_LastItem-8       9.386n ± 0%    7.881n ± 1%  -16.04% (p=0.000 n=20)
+ExecutionStatusString_MiddleItem-8     8.936n ± 0%    7.981n ± 1%  -10.68% (p=0.000 n=20)
+ExecutionStatusString_FirstItem-8      8.158n ± 0%    5.444n ± 0%  -33.27% (p=0.000 n=20)
+geomean                                2.934n         1.919n       -34.60%
 ```
 
 ### Enumer vs Idiomatic
@@ -93,17 +103,15 @@ geomean                                4.741n          2.909n        -38.64%
 goos: darwin
 goarch: arm64
 pkg: github.com/nrxr/enumbenchmarks/enumer/executionstatus
-                                    │  enumer.txt   │             idiomatic.txt             │
-                                    │    sec/op     │    sec/op     vs base                 │
-ExecutionStatus_String_LastItem-8      1.601n ± ∞ ¹   1.025n ± ∞ ¹        ~ (p=1.000 n=1) ²
-ExecutionStatus_String_MiddleItem-8    1.599n ± ∞ ¹   1.025n ± ∞ ¹        ~ (p=1.000 n=1) ²
-ExecutionStatus_String_FirstItem-8     1.600n ± ∞ ¹   1.025n ± ∞ ¹        ~ (p=1.000 n=1) ²
-ExecutionStatusString_LastItem-8      15.760n ± ∞ ¹   4.501n ± ∞ ¹        ~ (p=1.000 n=1) ²
-ExecutionStatusString_MiddleItem-8    13.390n ± ∞ ¹   3.342n ± ∞ ¹        ~ (p=1.000 n=1) ²
-ExecutionStatusString_FirstItem-8     13.140n ± ∞ ¹   3.127n ± ∞ ¹        ~ (p=1.000 n=1) ²
-geomean                                4.741n         1.924n        -59.43%
-¹ need >= 6 samples for confidence interval at level 0.95
-² need >= 4 samples to detect a difference at alpha level 0.05
+                                    │  enumer.txt  │            idiomatic.txt             │
+                                    │    sec/op    │    sec/op     vs base                │
+ExecutionStatus_String_LastItem-8     0.9767n ± 0%   0.6259n ± 0%  -35.92% (p=0.000 n=20)
+ExecutionStatus_String_MiddleItem-8   0.9767n ± 2%   0.6257n ± 0%  -35.94% (p=0.000 n=20)
+ExecutionStatus_String_FirstItem-8    0.9778n ± 1%   0.6259n ± 0%  -35.99% (p=0.000 n=20)
+ExecutionStatusString_LastItem-8       9.386n ± 0%    2.724n ± 0%  -70.98% (p=0.000 n=20)
+ExecutionStatusString_MiddleItem-8     8.936n ± 0%    2.044n ± 0%  -77.12% (p=0.000 n=20)
+ExecutionStatusString_FirstItem-8      8.158n ± 0%    1.912n ± 0%  -76.56% (p=0.000 n=20)
+geomean                                2.934n         1.173n       -60.01%
 ```
 
 ### Enumer vs Combined
@@ -112,15 +120,13 @@ geomean                                4.741n         1.924n        -59.43%
 goos: darwin
 goarch: arm64
 pkg: github.com/nrxr/enumbenchmarks/enumer/executionstatus
-                                    │  enumer.txt   │              combined.txt              │
-                                    │    sec/op     │    sec/op      vs base                 │
-ExecutionStatus_String_LastItem-8     1.6010n ± ∞ ¹   0.8569n ± ∞ ¹        ~ (p=1.000 n=1) ²
-ExecutionStatus_String_MiddleItem-8   1.5990n ± ∞ ¹   0.8567n ± ∞ ¹        ~ (p=1.000 n=1) ²
-ExecutionStatus_String_FirstItem-8    1.6000n ± ∞ ¹   0.8576n ± ∞ ¹        ~ (p=1.000 n=1) ²
-ExecutionStatusString_LastItem-8      15.760n ± ∞ ¹    4.464n ± ∞ ¹        ~ (p=1.000 n=1) ²
-ExecutionStatusString_MiddleItem-8    13.390n ± ∞ ¹    3.344n ± ∞ ¹        ~ (p=1.000 n=1) ²
-ExecutionStatusString_FirstItem-8     13.140n ± ∞ ¹    3.133n ± ∞ ¹        ~ (p=1.000 n=1) ²
-geomean                                4.741n          1.757n        -62.94%
-¹ need >= 6 samples for confidence interval at level 0.95
-² need >= 4 samples to detect a difference at alpha level 0.05
+                                    │  enumer.txt  │             combined.txt             │
+                                    │    sec/op    │    sec/op     vs base                │
+ExecutionStatus_String_LastItem-8     0.9767n ± 0%   0.5771n ± 9%  -40.91% (p=0.000 n=20)
+ExecutionStatus_String_MiddleItem-8   0.9767n ± 2%   0.5235n ± 0%  -46.41% (p=0.000 n=20)
+ExecutionStatus_String_FirstItem-8    0.9778n ± 1%   0.5233n ± 2%  -46.48% (p=0.000 n=20)
+ExecutionStatusString_LastItem-8       9.386n ± 0%    2.725n ± 0%  -70.97% (p=0.000 n=20)
+ExecutionStatusString_MiddleItem-8     8.936n ± 0%    2.043n ± 2%  -77.14% (p=0.000 n=20)
+ExecutionStatusString_FirstItem-8      8.158n ± 0%    1.915n ± 2%  -76.53% (p=0.000 n=20)
+geomean                                2.934n         1.091n       -62.82%
 ```

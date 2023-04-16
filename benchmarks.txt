@@ -1,0 +1,44 @@
+goos: darwin
+goarch: arm64
+pkg: github.com/nrxr/enumbenchmarks/combined/executionstatus
+BenchmarkExecutionStatus_String_LastItem-8     	1000000000	         0.5797 ns/op
+BenchmarkExecutionStatus_String_MiddleItem-8   	1000000000	         0.5248 ns/op
+BenchmarkExecutionStatus_String_FirstItem-8    	1000000000	         0.5227 ns/op
+BenchmarkExecutionStatusString_LastItem-8      	440918524	         2.727 ns/op
+BenchmarkExecutionStatusString_MiddleItem-8    	587417516	         2.045 ns/op
+BenchmarkExecutionStatusString_FirstItem-8     	627972648	         1.912 ns/op
+PASS
+ok  	github.com/nrxr/enumbenchmarks/combined/executionstatus	6.737s
+goos: darwin
+goarch: arm64
+pkg: github.com/nrxr/enumbenchmarks/enumer/executionstatus
+BenchmarkExecutionStatus_String_LastItem-8     	1000000000	         0.9765 ns/op
+BenchmarkExecutionStatus_String_MiddleItem-8   	1000000000	         0.9774 ns/op
+BenchmarkExecutionStatus_String_FirstItem-8    	1000000000	         0.9775 ns/op
+BenchmarkExecutionStatusString_LastItem-8      	133323987	         9.020 ns/op
+BenchmarkExecutionStatusString_MiddleItem-8    	132739348	         9.036 ns/op
+BenchmarkExecutionStatusString_FirstItem-8     	149557675	         8.093 ns/op
+PASS
+ok  	github.com/nrxr/enumbenchmarks/enumer/executionstatus	10.619s
+goos: darwin
+goarch: arm64
+pkg: github.com/nrxr/enumbenchmarks/idiomatic/executionstatus
+BenchmarkExecutionStatus_String_LastItem-8     	1000000000	         0.6260 ns/op
+BenchmarkExecutionStatus_String_MiddleItem-8   	1000000000	         0.6257 ns/op
+BenchmarkExecutionStatus_String_FirstItem-8    	1000000000	         0.6251 ns/op
+BenchmarkExecutionStatusString_LastItem-8      	439873963	         2.725 ns/op
+BenchmarkExecutionStatusString_MiddleItem-8    	586818466	         2.046 ns/op
+BenchmarkExecutionStatusString_FirstItem-8     	627604122	         1.912 ns/op
+PASS
+ok  	github.com/nrxr/enumbenchmarks/idiomatic/executionstatus	6.614s
+goos: darwin
+goarch: arm64
+pkg: github.com/nrxr/enumbenchmarks/manual/executionstatus
+BenchmarkExecutionStatus_String_LastItem-8     	1000000000	         0.5239 ns/op
+BenchmarkExecutionStatus_String_MiddleItem-8   	1000000000	         0.5230 ns/op
+BenchmarkExecutionStatus_String_FirstItem-8    	1000000000	         0.5232 ns/op
+BenchmarkExecutionStatusString_LastItem-8      	171471234	         6.886 ns/op
+BenchmarkExecutionStatusString_MiddleItem-8    	198201745	         6.044 ns/op
+BenchmarkExecutionStatusString_FirstItem-8     	224331176	         5.444 ns/op
+PASS
+ok  	github.com/nrxr/enumbenchmarks/manual/executionstatus	7.485s
